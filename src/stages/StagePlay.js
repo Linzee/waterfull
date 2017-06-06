@@ -1,6 +1,6 @@
 import KeyListener from '../common/KeyListener';
 
-import BuildCursor from '../world/buildCursor';
+import BuildCursor from '../world/BuildCursor';
 
 export default class StagePlay extends PIXI.Container {
 

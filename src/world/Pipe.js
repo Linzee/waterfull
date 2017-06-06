@@ -1,5 +1,5 @@
-import Structure from './structure';
-import Building from './building';
+import Structure from './Structure';
+import Building from './Building';
 
 export default class Pipe extends Structure {
 

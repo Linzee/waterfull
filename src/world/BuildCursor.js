@@ -1,8 +1,8 @@
-import In from './in';
-import Out from './out';
-import Reservoir from './reservoir';
-import Pipe from './pipe';
-import Building from './building';
+import In from './In';
+import Out from './Out';
+import Reservoir from './Reservoir';
+import Pipe from './Pipe';
+import Building from './Building';
 
 export default class BuildCursor extends PIXI.Container {
 

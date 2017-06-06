@@ -1,4 +1,4 @@
-import Structure from './structure';
+import Structure from './Structure';
 
 export default class Building extends Structure {
 

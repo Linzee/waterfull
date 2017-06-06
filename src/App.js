@@ -1,6 +1,6 @@
 import Stages from './common/Stages';
-import StagePlay from './stages/Play';
-import StageTopScore from './stages/TopScore';
+import StagePlay from './stages/StagePlay';
+import StageTopScore from './stages/StageTopScore';
 
 import TopScore from './common/TopScore';
 
