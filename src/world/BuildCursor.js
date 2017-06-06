@@ -34,7 +34,7 @@ export default class BuildCursor extends PIXI.Container {
 			if(this.buildingPipe !== false) {
 				//Place pipe
 
-				var hit = this.interactionManager.hitTest(e.data.global, this.world);
+				let hit = this.interactionManager.hitTest(e.data.global, this.world);
 				if(hit instanceof Building) {
 
 					if(this.buildingPipe.from === undefined || this.buildingPipe.from === hit) {
@@ -74,7 +74,7 @@ export default class BuildCursor extends PIXI.Container {
 
 			} else {
 
-				var hit = this.interactionManager.hitTest(e.data.global, this.world);
+				let hit = this.interactionManager.hitTest(e.data.global, this.world);
 				if(hit instanceof Structure) {
 					editBuildingGui.setBuilding(hit);
 				} else {

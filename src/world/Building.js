@@ -30,4 +30,13 @@ export default class Building extends Structure {
 
 	}
 
+	destructor() {
+		super.destructor();
+		this.pipes.forEach((pipe) => {
+			var ob = pipe.getOther(this);
+			ob[0].pipes.splice(ob[0].pipes.indexOf(pipe), 1);
+			pipe.parent.removeChild(pipe);
+		});
+	}
+
 }
