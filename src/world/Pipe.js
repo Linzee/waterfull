@@ -40,10 +40,10 @@ export default class Pipe extends Structure {
 		this.graphics.clear();
 
 		if(this.waterSpeed > 0) {
-			var color = 0x010000 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
+			let color = 0x010000 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
 			this.graphics.lineStyle(2, color).moveTo(this.from.x, this.from.y).lineTo(this.to.x, this.to.y);
 		} else {
-			var color = 0x000001 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
+			let color = 0x000001 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
 			this.graphics.lineStyle(2, color).moveTo(this.from.x, this.from.y).lineTo(this.to.x, this.to.y);
 		}
 	}

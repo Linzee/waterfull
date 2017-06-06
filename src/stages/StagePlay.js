@@ -1,8 +1,7 @@
 import BuildCursor from '../world/BuildCursor';
-import Reservoir from '../world/Reservoir';
-import Pipe from '../world/Pipe';
 import WaterNetworkSimulator from '../common/WaterNetworkSimulator';
 import BuildingsBar from '../world/BuildingsBar';
+import EditBuildingGui from '../world/EditBuildingGui';
 
 export default class StagePlay extends PIXI.Container {
 
@@ -34,7 +33,9 @@ export default class StagePlay extends PIXI.Container {
 
 		this.waterNetworkSimulator = new WaterNetworkSimulator(this.world);
 
-		this.buildCursor = new BuildCursor(this.world, this.interactionManager);
+		this.editBuildingGui = new EditBuildingGui();
+
+		this.buildCursor = new BuildCursor(this.world, this.editBuildingGui, this.interactionManager);
 
 		this.buildingsBar = new BuildingsBar(this.buildCursor);
 
@@ -46,6 +47,7 @@ export default class StagePlay extends PIXI.Container {
 
 		this.addChild(this.world);
 		this.addChild(this.buildCursor);
+		this.addChild(this.editBuildingGui);
 		this.addChild(this.buildingsBar);
 	}
 
@@ -68,6 +70,7 @@ export default class StagePlay extends PIXI.Container {
 		this.world = undefined;
 		this.waterNetworkSimulator = undefined;
 		this.buildCursor = undefined;
+		this.editBuildingGui = undefined;
 		this.buildingsBar = undefined;
 	}
 }

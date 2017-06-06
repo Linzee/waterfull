@@ -1,5 +1,3 @@
-import Building from '../world/Building';
-import Pipe from '../world/Pipe';
 import {shuffle} from './Utils';
 
 export default class WaterNetworkSimulator {
@@ -18,7 +16,7 @@ export default class WaterNetworkSimulator {
     this.world.buildings.children.forEach((building) => {
       building.tick();
 
-      if(building.getWater() == 0) {
+      if(building.getWater() === 0) {
         return;
       }
 

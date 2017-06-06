@@ -1,0 +1,59 @@
+export default class EditBuildingGui extends PIXI.Container {
+
+  constructor() {
+    super();
+
+    this.building = null;
+
+    this.background = new PIXI.Graphics();
+    this.background.drawRect();
+    this.background.beginFill(0xCCCCCC);
+		this.background.drawRect(-80, 10, 160, 100);
+    this.background.drawPolygon([new PIXI.Point(0, 0), new PIXI.Point(5, 10), new PIXI.Point(-5, 10)]);
+    this.background.endFill();
+    this.addChild(this.background);
+
+    this.textLevel = new PIXI.Text("Level 0");
+    this.textLevel.y = 8 + 0;
+    this.textLevel.anchor.x = 0.5;
+    this.addChild(this.textLevel);
+
+    this.textDowngrade = new PIXI.Text("Downgrade");
+    this.textDowngrade.anchor.x = 0.5;
+    this.textDowngrade.y = 8 + 32;
+    this.textDowngrade.interactive = true;
+    this.textDowngrade.click = () => {
+      this.building.downgrade();
+      if(this.building.level > 0) {
+        this.setBuilding(this.building);
+      } else {
+        this.setBuilding(null);
+      }
+    };
+    this.addChild(this.textDowngrade);
+
+    this.textUpgrade = new PIXI.Text("Upgrade");
+    this.textUpgrade.anchor.x = 0.5;
+    this.textUpgrade.y = 8 + 64;
+    this.textUpgrade.interactive = true;
+    this.textUpgrade.click = () => {
+      this.building.upgrade();
+      this.setBuilding(this.building);
+    };
+    this.addChild(this.textUpgrade);
+
+    this.visible = false;
+  }
+
+  setBuilding(building) {
+    this.building = building;
+    this.visible = false;
+
+    if(this.building !== null) {
+      this.textLevel.text = "Level "+this.building.level;
+      this.x = this.building.x;
+      this.y = this.building.y;
+      this.visible = true;
+    }
+  }
+}

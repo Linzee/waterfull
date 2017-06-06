@@ -1,7 +1,7 @@
 
 export function shuffle(a, amount) {
     var j, x, i;
-    if(amount == undefined) {
+    if(amount === undefined) {
       amount = a.length;
     }
     for (i = amount; i; i--) {

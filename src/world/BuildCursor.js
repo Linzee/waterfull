@@ -4,13 +4,15 @@ import Point from './Point';
 import Reservoir from './Reservoir';
 import Pipe from './Pipe';
 import Building from './Building';
+import Structure from './Structure';
 
 export default class BuildCursor extends PIXI.Container {
 
-	constructor(world, interactionManager) {
+	constructor(world, editBuildingGui, interactionManager) {
 		super();
 
 		this.world = world;
+		this.editBuildingGui = editBuildingGui;
 		this.interactionManager = interactionManager;
 
 		this.building = null;
@@ -34,6 +36,7 @@ export default class BuildCursor extends PIXI.Container {
 
 				var hit = this.interactionManager.hitTest(e.data.global, this.world);
 				if(hit instanceof Building) {
+
 					if(this.buildingPipe.from === undefined || this.buildingPipe.from === hit) {
 						this.buildingPipe.from = hit;
 
@@ -42,9 +45,8 @@ export default class BuildCursor extends PIXI.Container {
 						//pipe already exists
 						var pipeAlreadyThere = false;
 						this.buildingPipe.from.pipes.forEach((p) => {
-							var ob, d;
-							[ob, d] = p.getOther(this.buildingPipe.from);
-							if(ob == hit) {
+							var obs = p.getOther(this.buildingPipe.from);
+							if(obs[0] === hit) {
 								pipeAlreadyThere = true;
 							}
 						});
@@ -56,6 +58,9 @@ export default class BuildCursor extends PIXI.Container {
 						}
 					}
 				} else {
+
+					editBuildingGui.setBuilding(null);
+
 					this.buildingPipe = false;
 				}
 
@@ -66,6 +71,15 @@ export default class BuildCursor extends PIXI.Container {
 				world.buildings.addChild(this.building);
 				this.building.interactive = true;
 				this.building = null;
+
+			} else {
+
+				var hit = this.interactionManager.hitTest(e.data.global, this.world);
+				if(hit instanceof Structure) {
+					editBuildingGui.setBuilding(hit);
+				} else {
+					editBuildingGui.setBuilding(null);
+				}
 			}
 		}
 	}
