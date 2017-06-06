@@ -2,6 +2,7 @@ import BuildCursor from '../world/BuildCursor';
 import WaterNetworkSimulator from '../common/WaterNetworkSimulator';
 import BuildingsBar from '../world/BuildingsBar';
 import EditBuildingGui from '../world/EditBuildingGui';
+import In from '../world/In';
 
 export default class StagePlay extends PIXI.Container {
 
@@ -49,6 +50,14 @@ export default class StagePlay extends PIXI.Container {
 		this.addChild(this.buildCursor);
 		this.addChild(this.editBuildingGui);
 		this.addChild(this.buildingsBar);
+
+		// Spawn first water source
+		var firstWaterSource = new In();
+		firstWaterSource.x = this.settings.width / 2;
+		firstWaterSource.y = this.settings.height / 2;
+		firstWaterSource.level = 1;
+		firstWaterSource.interactive = true;
+		this.world.buildings.addChild(firstWaterSource);
 	}
 
 	tick() {

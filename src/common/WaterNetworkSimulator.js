@@ -20,24 +20,45 @@ export default class WaterNetworkSimulator {
         return;
       }
 
-      building.pipes.forEach((pipe) => {
-        var otherBuilding, pipeDirection;
-        [otherBuilding, pipeDirection] = pipe.getOther(building);
+      if(building.isActive()) {
 
-        if(otherBuilding.getWater() < otherBuilding.getCapacity()) {
-          var ma = Math.min(building.getWater(), pipe.getCapacity() - Math.abs(pipe.waterSpeed));
-          otherBuilding.addWater(ma);
-          pipe.waterSpeed += pipeDirection * ma;
-          building.lowerWater(ma);
-        }
-      });
+        building.pipes.forEach((pipe) => {
 
-      shuffle(building.pipes);
-      building.alpha = building.getWater() / building.getCapacity();
+          if(pipe.isActive()) {
+
+            var otherBuilding, pipeDirection;
+            [otherBuilding, pipeDirection] = pipe.getOther(building);
+
+            if(otherBuilding.isActive()) {
+              if(otherBuilding.getWater() < otherBuilding.getCapacity()) {
+                let ma = Math.min(otherBuilding.getCapacity() - otherBuilding.getWater(), Math.min(building.getWater(), pipe.getCapacity() - Math.abs(pipe.waterSpeed)));
+                otherBuilding.addWater(ma);
+                pipe.waterSpeed += pipeDirection * ma;
+                building.lowerWater(ma);
+              }
+            } else {
+              let ma = Math.min(otherBuilding.getRequiredWater() - otherBuilding.getWater(), Math.min(building.getWater(), pipe.getCapacity() - Math.abs(pipe.waterSpeed)));
+              otherBuilding.water += ma;
+              pipe.waterSpeed += pipeDirection * ma;
+              building.lowerWater(ma);
+            }
+
+          } else {
+            let ma = Math.min(building.getWater(), pipe.getRequiredWater() - pipe.getWater());
+            pipe.water += ma;
+            building.lowerWater(ma);
+          }
+        });
+
+        shuffle(building.pipes);
+        building.alpha = building.getWater() / building.getCapacity();
+
+      }
     });
 
     //Redraw pipes
     this.world.pipes.children.forEach((pipe) => {
+      pipe.tick();
       pipe.redraw();
     });
 

@@ -5,29 +5,11 @@ export default class Building extends Structure {
 	constructor(image) {
 		super();
 		this.pipes = [];
-		this.water = 0;
 
-		this.addChild(new PIXI.Sprite.fromImage(image));
-	}
-
-	getWater() {
-		return this.water;
-	}
-
-	getCapacity() {
-		return 1;
-	}
-
-	addWater(water) {
-		this.water = Math.min(this.getCapacity(), this.water + water);
-	}
-
-	lowerWater(water) {
-		this.water = Math.max(0, this.water - water);
-	}
-
-	tick() {
-
+		let sprite = new PIXI.Sprite.fromImage(image);
+		sprite.anchor.x = 0.5;
+		sprite.anchor.y = 0.5;
+		this.addChild(sprite);
 	}
 
 	destructor() {

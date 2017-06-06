@@ -11,7 +11,10 @@ export default class Out extends Building {
 	}
 
   tick() {
-    this.water = 0;
+    super.tick();
+    if(this.isActive()) {
+      this.water = 0;
+    }
   }
 
 }

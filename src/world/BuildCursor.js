@@ -68,8 +68,8 @@ export default class BuildCursor extends PIXI.Container {
 				//Place building
 
 				this.removeChild(this.building);
-				world.buildings.addChild(this.building);
 				this.building.interactive = true;
+				world.buildings.addChild(this.building);
 				this.building = null;
 
 			} else {
