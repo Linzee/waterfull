@@ -1,6 +1,7 @@
 import KeyListener from '../common/KeyListener';
 
 import BuildCursor from '../world/BuildCursor';
+import WaterNetworkSimulator from '../common/WaterNetworkSimulator';
 
 export default class StagePlay extends PIXI.Container {
 
@@ -15,6 +16,7 @@ export default class StagePlay extends PIXI.Container {
 	load() {
 
 		this.world = new PIXI.Container();
+		this.waterNetworkSimulator = new WaterNetworkSimulator(this.world);
 
 		let background = new PIXI.Graphics();
 		background.beginFill(StagePlay.BACKGROUND_COLOR);
@@ -41,7 +43,7 @@ export default class StagePlay extends PIXI.Container {
 	}
 
 	tick() {
-		//TODO calculate transformed water
+		this.waterNetworkSimulator.tick();
 	}
 
 	restart() {

@@ -6,8 +6,12 @@ export default class Out extends Building {
     super(require("../images/out.png"))
   }
 
-  waterIn() {
+	getCapacity() {
 		return this.level;
 	}
+
+  tick() {
+    this.water = 0;
+  }
 
 }
