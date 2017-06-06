@@ -1,5 +1,6 @@
 import In from './In';
 import Out from './Out';
+import Point from './Point';
 import Reservoir from './Reservoir';
 import Pipe from './Pipe';
 import Building from './Building';
@@ -35,18 +36,34 @@ export default class BuildCursor extends PIXI.Container {
 				if(hit instanceof Building) {
 					if(this.buildingPipe.from === undefined || this.buildingPipe.from === hit) {
 						this.buildingPipe.from = hit;
+
 					} else {
-						this.buildingPipe.to = hit;
-						world.addChild(new Pipe(this.buildingPipe.from, this.buildingPipe.to));
-						this.buildingPipe = false;
+
+						//pipe already exists
+						var pipeAlreadyThere = false;
+						this.buildingPipe.from.pipes.forEach((p) => {
+							var ob, d;
+							[ob, d] = p.getOther(this.buildingPipe.from);
+							if(ob == hit) {
+								pipeAlreadyThere = true;
+							}
+						});
+
+						if(!pipeAlreadyThere) {
+							this.buildingPipe.to = hit;
+							world.pipes.addChild(new Pipe(this.buildingPipe.from, this.buildingPipe.to));
+							this.buildingPipe = false;
+						}
 					}
+				} else {
+					this.buildingPipe = false;
 				}
 
 			} else if(this.building !== null) {
 				//Place building
 
 				this.removeChild(this.building);
-				world.addChild(this.building);
+				world.buildings.addChild(this.building);
 				this.building.interactive = true;
 				this.building = null;
 			}
@@ -67,6 +84,10 @@ export default class BuildCursor extends PIXI.Container {
 				break;
 			case 'out':
 				this.building = new Out();
+				this.addChild(this.building);
+				break;
+			case 'point':
+				this.building = new Point();
 				this.addChild(this.building);
 				break;
 			case 'reservoir':
