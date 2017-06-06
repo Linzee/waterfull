@@ -2,17 +2,17 @@ import Building from './building';
 
 export default class Reservior extends Building {
 
-	constructor(x, y) {
-		super(x, y);
+	constructor() {
+		super(require("../images/reservoir.png"));
     this.water = 0;
 	}
 
   waterIn() {
-		return level;
+		return this.level;
 	}
 
 	waterOut() {
-		return level;
+		return this.level;
 	}
 
 	canHoldWater() {

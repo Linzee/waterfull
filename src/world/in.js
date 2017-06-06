@@ -2,12 +2,12 @@ import Building from './building';
 
 export default class In extends Building {
 
-	constructor(x, y) {
-		super(x, y);
+	constructor() {
+		super(require("../images/in.png"))
 	}
 
 	waterOut() {
-		return level;
+		return this.level;
 	}
 
 }

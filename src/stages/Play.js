@@ -1,22 +1,28 @@
 import KeyListener from '../common/KeyListener';
 
+import BuildCursor from '../world/buildCursor';
+
 export default class StagePlay extends PIXI.Container {
 
-	constructor(stages, settings) {
+	constructor(stages, settings, interactionManager) {
 		super();
 
 		this.stages = stages;
 		this.settings = settings;
+		this.interactionManager = interactionManager;
 	}
 
 	load() {
-		this.background = new PIXI.Graphics();
-		this.background.beginFill(StagePlay.BACKGROUND_COLOR);
-		this.background.drawRect(0, 0, this.settings.width, this.settings.height);
 
 		this.world = new PIXI.Container();
 
-		this.buildCursor = new BuildCursor(this.world);
+		let background = new PIXI.Graphics();
+		background.beginFill(StagePlay.BACKGROUND_COLOR);
+		background.drawRect(0, 0, this.settings.width, this.settings.height);
+
+		this.world.addChild(background);
+
+		this.buildCursor = new BuildCursor(this.world, this.interactionManager);
 
 		/*
 		this.cartsText = new PIXI.Text("0", new PIXI.TextStyle({fontSize: 40, fill: '#9FBC12'}));
@@ -24,14 +30,13 @@ export default class StagePlay extends PIXI.Container {
 		this.cartsText.y = 16;
 		*/
 
-		this.addChild(this.background);
-		this.addChild(this.buildCursor);
 		this.addChild(this.world);
+		this.addChild(this.buildCursor);
 
-		this.keyUp = new KeyListener(38);
-		this.keyDown = new KeyListener(40);
-		this.keyLeft = new KeyListener(37);
-		this.keyRight = new KeyListener(39);
+		this.keyUp = new KeyListener(38, () => this.buildCursor.newBuilding('in'));
+		this.keyDown = new KeyListener(40, () => this.buildCursor.newBuilding('out'));
+		this.keyLeft = new KeyListener(37, () => this.buildCursor.newBuilding('reservoir'));
+		this.keyRight = new KeyListener(39, () => this.buildCursor.newBuilding('pipe'));
 		this.keySpace = new KeyListener(32);
 	}
 
@@ -45,7 +50,6 @@ export default class StagePlay extends PIXI.Container {
 	}
 
 	unload() {
-		this.removeChild(this.background);
 		this.removeChild(this.world);
 		this.removeChild(this.buildCursor);
 
@@ -61,7 +65,6 @@ export default class StagePlay extends PIXI.Container {
 		this.keyRight = undefined;
 		this.keySpace = undefined;
 
-		this.background = undefined;
 		this.world = undefined;
 		this.buildCursor = undefined;
 	}

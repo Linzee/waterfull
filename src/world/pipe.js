@@ -10,6 +10,12 @@ export default class Pipe extends Structure {
     }
     from.pipes.push(this);
     to.pipes.push(this);
+
+		var graphics = new PIXI.Graphics();
+
+		graphics.lineStyle(2, 0x000000).moveTo(from.x, from.y).lineTo(to.x, to.y);
+
+		this.addChild(graphics)
 	}
 
 }

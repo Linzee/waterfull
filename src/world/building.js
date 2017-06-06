@@ -2,11 +2,11 @@ import Structure from './structure';
 
 export default class Building extends Structure {
 
-	constructor(x, y) {
+	constructor(image) {
 		super();
-		this.x = x;
-		this.y = y;
 		this.pipes = [];
+
+		this.addChild(new PIXI.Sprite.fromImage(image));
 	}
 
 	waterIn() {
