@@ -13,7 +13,7 @@ export default class WaterNetworkSimulator {
     this.world.children.forEach((structure) => {
       if(structure instanceof Pipe) {
         var pipe = structure;
-        pipe.tranportedWater = 0;
+        pipe.waterSpeed = 0;
       }
     });
 
@@ -29,12 +29,13 @@ export default class WaterNetworkSimulator {
         }
 
         building.pipes.forEach((pipe) => {
-          var otherBuilding = pipe.getOther(building);
+          var otherBuilding, pipeDirection;
+          [otherBuilding, pipeDirection] = pipe.getOther(building);
 
           if(otherBuilding.getWater() < otherBuilding.getCapacity()) {
-            var ma = Math.min(building.getWater(), pipe.getCapacity() - pipe.tranportedWater);
+            var ma = Math.min(building.getWater(), pipe.getCapacity() - Math.abs(pipe.waterSpeed));
             otherBuilding.addWater(ma);
-            pipe.tranportedWater += ma;
+            pipe.waterSpeed += pipeDirection * ma;
             building.lowerWater(ma);
           }
         });
@@ -42,6 +43,14 @@ export default class WaterNetworkSimulator {
         shuffle(building.pipes); //TODO
         console.log(building.getWater());
         building.alpha = building.getWater() / building.getCapacity();
+      }
+    });
+
+    //Redraw pipes
+    this.world.children.forEach((structure) => {
+      if(structure instanceof Pipe) {
+        var pipe = structure;
+        pipe.redraw();
       }
     });
   }

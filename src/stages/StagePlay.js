@@ -1,6 +1,8 @@
 import KeyListener from '../common/KeyListener';
 
 import BuildCursor from '../world/BuildCursor';
+import Reservoir from '../world/Reservoir';
+import Pipe from '../world/Pipe';
 import WaterNetworkSimulator from '../common/WaterNetworkSimulator';
 
 export default class StagePlay extends PIXI.Container {
@@ -39,7 +41,24 @@ export default class StagePlay extends PIXI.Container {
 		this.keyDown = new KeyListener(40, () => this.buildCursor.newBuilding('out'));
 		this.keyLeft = new KeyListener(37, () => this.buildCursor.newBuilding('reservoir'));
 		this.keyRight = new KeyListener(39, () => this.buildCursor.newBuilding('pipe'));
-		this.keySpace = new KeyListener(32);
+		this.keySpace = new KeyListener(32, () => {
+			for(var x=0; x<5; x++) {
+				for(var y=0; y<5; y++) {
+					var w = new Reservoir();
+					w.x = 20 + 60*x;
+					w.y = 20 + 60*y;
+					this.world.addChild(w);
+				}
+			}
+			var ws = this.world.children.slice(0);
+			ws.forEach((w1) => {
+				ws.forEach((w2) => {
+					if(w1 instanceof Reservoir && w2 instanceof Reservoir) {
+						this.world.addChild(new Pipe(w1, w2));
+					}
+				});
+			});
+		});
 	}
 
 	tick() {

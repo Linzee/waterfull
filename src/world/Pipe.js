@@ -15,27 +15,37 @@ export default class Pipe extends Structure {
 		this.to = to;
 		to.pipes.push(this);
 
-		this.tranportedWater = 0;
+		this.waterSpeed = 0;
 
-		var graphics = new PIXI.Graphics();
-
-		graphics.lineStyle(2, 0x000000).moveTo(from.x, from.y).lineTo(to.x, to.y);
-
-		this.addChild(graphics);
+		this.graphics = new PIXI.Graphics();
+		this.redraw();
+		this.addChild(this.graphics);
 	}
 
 	getOther(building) {
-		if(this.from == building) {
-			return this.to;
+		if(this.from === building) {
+			return [this.to, 1];
 		}
-		if(this.to == building) {
-			return this.from;
+		if(this.to ===	 building) {
+			return [this.from, -1];
 		}
 		throw new Error("Illegal building provided");
 	}
 
 	getCapacity() {
 		return this.level;
+	}
+
+	redraw() {
+		this.graphics.clear();
+
+		if(this.waterSpeed > 0) {
+			var color = 0x010000 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
+			this.graphics.lineStyle(2, color).moveTo(this.from.x, this.from.y).lineTo(this.to.x, this.to.y);
+		} else {
+			var color = 0x000001 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
+			this.graphics.lineStyle(2, color).moveTo(this.from.x, this.from.y).lineTo(this.to.x, this.to.y);
+		}
 	}
 
 }
