@@ -3,7 +3,7 @@ import WaterNetworkSimulator from '../common/WaterNetworkSimulator';
 import BuildingsBar from '../world/BuildingsBar';
 import EditBuildingGui from '../world/EditBuildingGui';
 import Terrain from '../world/Terrain';
-import In from '../world/In';
+import WorldGenerator from '../common/WorldGenerator';
 
 export default class StagePlay extends PIXI.Container {
 
@@ -54,18 +54,14 @@ export default class StagePlay extends PIXI.Container {
 		this.addChild(this.editBuildingGui);
 		this.addChild(this.buildingsBar);
 
-		// Spawn first water source
-		var firstWaterSource = new In();
-		firstWaterSource.level = 1;
-		firstWaterSource.interactive = true;
-		this.world.buildings.addChild(firstWaterSource);
+		var worldGenerator = new WorldGenerator(this.world);
 	}
 
 	tick() {
 		this.waterNetworkSimulator.tick();
 
 
-		let zoom = 1 + (this.time * 0.00001);
+		let zoom = 1 + (this.time * 0.00004);
 		this.world.scale.x = 1 / zoom;
 		this.world.scale.y = 1 / zoom;
 

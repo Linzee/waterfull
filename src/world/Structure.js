@@ -29,7 +29,7 @@ export default class Structure extends PIXI.Container {
 	}
 
 	getRequiredWater() {
-		return 300 * Math.abs(this.level - this.targetLevel);
+		return 30 * Math.abs(this.level - this.targetLevel);
 	}
 
 	upgrade() {
