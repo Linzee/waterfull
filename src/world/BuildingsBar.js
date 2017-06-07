@@ -13,6 +13,8 @@ export default class BuildingsBar extends PIXI.Container {
 
       var sprite = new PIXI.Sprite.fromImage(image);
       sprite.x = 60 * index;
+			sprite.interactive = true;
+			sprite.click = this.newBuilding.bind(this, index);
 
       return {
         type: type,
@@ -22,11 +24,21 @@ export default class BuildingsBar extends PIXI.Container {
     });
 
     this.buildings.forEach((b) => this.addChild(b.sprite));
+
+		this.buildCursor.onChange = (type) => {
+			this.buildings.forEach(building => {
+				if(building.type === type) {
+					building.sprite.alpha = 0.5;
+				} else {
+					building.sprite.alpha = 1.0;
+				}
+			})
+		};
   }
 
   newBuilding(index) {
     this.buildCursor.newBuilding(this.buildings[index].type);
-		this.buildings[index].sprite.alpha = 0.5;
+
   }
 
   destructor() {

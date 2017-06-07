@@ -17,14 +17,19 @@ export default class BuildCursor extends PIXI.Container {
 
 		this.building = null;
 		this.buildingPipe = false;
+		this.onChange = () => {};
+		this.mouse_x = 0;
+		this.mouse_y = 0;
 
 		world.interactive = true;
 
 		world.on("mousemove", (e) => {
 			if(this.building !== null) {
 				if(this.buildingPipe === false) {
-					this.building.x = e.data.global.x / this.scale.x;
-					this.building.y = e.data.global.y / this.scale.y;
+					this.mouse_x = e.data.global.x / this.scale.x;
+					this.mouse_y = e.data.global.y / this.scale.y;
+					this.building.x = this.mouse_x;
+					this.building.y = this.mouse_y;
 				}
 			}
 		});
@@ -55,13 +60,14 @@ export default class BuildCursor extends PIXI.Container {
 							this.buildingPipe.to = hit;
 							world.pipes.addChild(new Pipe(this.buildingPipe.from, this.buildingPipe.to));
 							this.buildingPipe = false;
+							this.onChange(null);
 						}
 					}
 				} else {
 
 					editBuildingGui.setBuilding(null);
-
 					this.buildingPipe = false;
+					this.onChange(null);
 				}
 
 			} else if(this.building !== null) {
@@ -73,6 +79,7 @@ export default class BuildCursor extends PIXI.Container {
 				this.building.y = this.building.y - this.world.y / this.world.scale.y;
 				world.buildings.addChild(this.building);
 				this.building = null;
+				this.onChange(null);
 
 			} else {
 
@@ -97,28 +104,37 @@ export default class BuildCursor extends PIXI.Container {
 			case 'in':
 				this.building = new In();
 				this.addChild(this.building);
+				this.onChange('in');
 				break;
 			case 'out':
 				this.building = new Out();
 				this.addChild(this.building);
+				this.onChange('out');
 				break;
 			case 'point':
 				this.building = new Point();
 				this.addChild(this.building);
-				break;
-			case 'reservoir':
-				this.building = new Reservoir();
-				this.addChild(this.building);
+				this.onChange('point');
 				break;
 			case 'pipe':
-			console.log("building pipe");
 				this.buildingPipe = {
 					from: undefined,
 					to: undefined
 				};
+				this.onChange('pipe');
+				break;
+			case 'reservoir':
+				this.building = new Reservoir();
+				this.addChild(this.building);
+				this.onChange('reservoir');
 				break;
 			default:
 				throw new Error("Illegal building type");
+		}
+
+		if(this.building !== null) {
+			this.building.x = this.mouse_x;
+			this.building.y = this.mouse_y;
 		}
 	}
 

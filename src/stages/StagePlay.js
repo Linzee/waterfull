@@ -42,6 +42,8 @@ export default class StagePlay extends PIXI.Container {
 		this.buildCursor = new BuildCursor(this.world, this.editBuildingGui, this.interactionManager);
 
 		this.buildingsBar = new BuildingsBar(this.buildCursor);
+		this.buildingsBar.x = this.settings.width / 2 - (60*5)/2;
+		this.buildingsBar.y = this.settings.height - 60;
 
 		/*
 		this.cartsText = new PIXI.Text("0", new PIXI.TextStyle({fontSize: 40, fill: '#9FBC12'}));
