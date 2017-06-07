@@ -18,7 +18,7 @@ export default class Terrain extends PIXI.Container {
 
 	getHeight(x, y) {
 		var d = Math.sqrt(x*x+y*y);
-    var h = this.noise.noise2D(x / 100, y / 100) / 2 + 0.5;
+    var h = this.noise.noise2D(x / (Terrain.SIZE * 10), y / (Terrain.SIZE * 10))  / 2 + 0.5;
 		if(d < 20) {
 			return Math.max(0, h - 1 + d/20);
 		} else {
@@ -35,7 +35,7 @@ export default class Terrain extends PIXI.Container {
 				var color;
 
 				if(height > Terrain.WATER_HEIGHT) {
-					color = chroma(Terrain.COLOR[0] * height, Terrain.COLOR[1] * height, Terrain.COLOR[2] * height).num();
+					color = Terrain.COLOR(height).num();
 				} else {
 					color = chroma("blue").num();
 				}
@@ -53,6 +53,6 @@ export default class Terrain extends PIXI.Container {
   }
 }
 
-Terrain.COLOR = [204, 51, 255];
+Terrain.COLOR = chroma.scale(['yellow', 'navy']).mode('hsl');
 Terrain.SIZE = 10;
 Terrain.WATER_HEIGHT = 0.1;

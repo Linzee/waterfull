@@ -51,8 +51,6 @@ export default class WaterNetworkSimulator {
         });
 
         shuffle(building.pipes);
-        building.alpha = building.getWater() / building.getCapacity();
-
       }
     });
 
