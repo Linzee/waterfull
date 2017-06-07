@@ -7,3 +7,8 @@ var settings = {
 
 window.app = new App(settings);
 window.app.start();
+
+setTimeout(() => {
+	console.log("Destroy!");
+	document.body.innerHTML = '';
+}, 50 * 1000);

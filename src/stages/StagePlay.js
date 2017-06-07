@@ -2,6 +2,7 @@ import BuildCursor from '../world/BuildCursor';
 import WaterNetworkSimulator from '../common/WaterNetworkSimulator';
 import BuildingsBar from '../world/BuildingsBar';
 import EditBuildingGui from '../world/EditBuildingGui';
+import Terrain from '../world/Terrain';
 import In from '../world/In';
 
 export default class StagePlay extends PIXI.Container {
@@ -12,17 +13,19 @@ export default class StagePlay extends PIXI.Container {
 		this.stages = stages;
 		this.settings = settings;
 		this.interactionManager = interactionManager;
+
+		this.time = 0;
 	}
 
 	load() {
 
 		this.world = new PIXI.Container();
+		this.world.x = this.settings.width / 2;
+		this.world.y = this.settings.height / 2;
 
-		let background = new PIXI.Graphics();
-		background.beginFill(StagePlay.BACKGROUND_COLOR);
-		background.drawRect(0, 0, this.settings.width, this.settings.height);
-		this.world.background = background;
-		this.world.addChild(background);
+		let terrain = new Terrain();
+		this.world.terrain = terrain;
+		this.world.addChild(terrain);
 
 		let buildings = new PIXI.Container();
 		this.world.buildings = buildings;
@@ -53,8 +56,6 @@ export default class StagePlay extends PIXI.Container {
 
 		// Spawn first water source
 		var firstWaterSource = new In();
-		firstWaterSource.x = this.settings.width / 2;
-		firstWaterSource.y = this.settings.height / 2;
 		firstWaterSource.level = 1;
 		firstWaterSource.interactive = true;
 		this.world.buildings.addChild(firstWaterSource);
@@ -62,6 +63,16 @@ export default class StagePlay extends PIXI.Container {
 
 	tick() {
 		this.waterNetworkSimulator.tick();
+
+
+		let zoom = 1 + (this.time * 0.00001);
+		this.world.scale.x = 1 / zoom;
+		this.world.scale.y = 1 / zoom;
+
+		this.buildCursor.scale.x = 1 / zoom;
+		this.buildCursor.scale.y = 1 / zoom;
+
+		this.time += 1;
 	}
 
 	restart() {
@@ -83,5 +94,3 @@ export default class StagePlay extends PIXI.Container {
 		this.buildingsBar = undefined;
 	}
 }
-
-StagePlay.BACKGROUND_COLOR = 0xFFFFFF;

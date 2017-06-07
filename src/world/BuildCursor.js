@@ -20,16 +20,16 @@ export default class BuildCursor extends PIXI.Container {
 
 		world.interactive = true;
 
-		world.mousemove = (e) => {
+		world.on("mousemove", (e) => {
 			if(this.building !== null) {
 				if(this.buildingPipe === false) {
-					this.building.x = e.data.global.x;
-					this.building.y = e.data.global.y;
+					this.building.x = e.data.global.x / this.scale.x;
+					this.building.y = e.data.global.y / this.scale.y;
 				}
 			}
-		}
+		});
 
-		world.click = (e) => {
+		world.on("mousedown", (e) => {
 
 			if(this.buildingPipe !== false) {
 				//Place pipe
@@ -69,6 +69,8 @@ export default class BuildCursor extends PIXI.Container {
 
 				this.removeChild(this.building);
 				this.building.interactive = true;
+				this.building.x = this.building.x - this.world.x / this.world.scale.x;
+				this.building.y = this.building.y - this.world.y / this.world.scale.y;
 				world.buildings.addChild(this.building);
 				this.building = null;
 
@@ -81,7 +83,7 @@ export default class BuildCursor extends PIXI.Container {
 					editBuildingGui.setBuilding(null);
 				}
 			}
-		}
+		});
 	}
 
 	newBuilding(type) {

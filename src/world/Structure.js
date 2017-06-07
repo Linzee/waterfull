@@ -24,13 +24,12 @@ export default class Structure extends PIXI.Container {
 		this.water = Math.max(0, this.water - water);
 	}
 
-
 	isActive() {
-		return this.level == this.targetLevel;
+		return this.level === this.targetLevel;
 	}
 
 	getRequiredWater() {
-		return 30 * Math.abs(this.level - this.targetLevel);
+		return 300 * Math.abs(this.level - this.targetLevel);
 	}
 
 	upgrade() {
