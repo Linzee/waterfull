@@ -29,13 +29,13 @@ export default class StagePlay extends PIXI.Container {
 		this.world.terrain = terrain;
 		this.world.addChild(terrain);
 
-		let buildings = new PIXI.Container();
-		this.world.buildings = buildings;
-		this.world.addChild(buildings);
-
 		let pipes = new PIXI.Container();
 		this.world.pipes = pipes;
 		this.world.addChild(pipes);
+
+		let buildings = new PIXI.Container();
+		this.world.buildings = buildings;
+		this.world.addChild(buildings);
 
 		this.waterNetworkSimulator = new WaterNetworkSimulator(this.world);
 

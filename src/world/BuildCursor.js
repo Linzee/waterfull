@@ -5,6 +5,7 @@ import Reservoir from './Reservoir';
 import Pipe from './Pipe';
 import Building from './Building';
 import Structure from './Structure';
+import {binaryPlaceFor} from '../common/Utils';
 
 export default class BuildCursor extends PIXI.Container {
 
@@ -78,7 +79,10 @@ export default class BuildCursor extends PIXI.Container {
 				this.building.interactive = true;
 				this.building.x = this.building.x - this.world.x / this.world.scale.x;
 				this.building.y = this.building.y - this.world.y / this.world.scale.y;
+
 				world.buildings.addChild(this.building);
+				world.buildings.children.sort((a,b) => a.y-b.y);
+
 				this.building = null;
 				this.onChange(null);
 
