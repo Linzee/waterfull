@@ -39,7 +39,7 @@ export default class StagePlay extends PIXI.Container {
 
 		this.waterNetworkSimulator = new WaterNetworkSimulator(this.world);
 
-		this.editBuildingGui = new EditBuildingGui();
+		this.editBuildingGui = new EditBuildingGui(this.world);
 
 		this.buildCursor = new BuildCursor(this.world, this.editBuildingGui, this.interactionManager, this);
 

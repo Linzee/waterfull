@@ -2,9 +2,10 @@ import Structure from './Structure';
 
 export default class EditBuildingGui extends PIXI.Container {
 
-  constructor() {
+  constructor(world) {
     super();
 
+    this.world = world;
     this.building = null;
 
     if(Structure.LEVELING_ENABLED) {
@@ -85,8 +86,8 @@ export default class EditBuildingGui extends PIXI.Container {
         this.textLevel.text = "Level "+this.building.level;
       }
 
-      this.x = this.building.x;
-      this.y = this.building.y;
+      this.x = (this.building.x * this.world.scale.x) + this.world.x;
+      this.y = (this.building.y * this.world.scale.y) + this.world.y;
       this.visible = true;
     }
   }
