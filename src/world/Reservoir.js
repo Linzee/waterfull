@@ -7,7 +7,7 @@ export default class Reservior extends Building {
 	}
 
 	getCapacity() {
-		return this.level * 100;
+		return this.level * 1000;
 	}
 
 }

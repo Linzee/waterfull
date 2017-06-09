@@ -35,4 +35,4 @@ export default class WorldGenerator {
 
 }
 
-WorldGenerator.OUTS_COUNT = 100;
+WorldGenerator.OUTS_COUNT = 200;

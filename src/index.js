@@ -11,4 +11,4 @@ window.app.start();
 setTimeout(() => {
 	console.log("Destroy!");
 	document.body.innerHTML = '';
-}, 50 * 1000);
+}, 4 * 60 * 1000);

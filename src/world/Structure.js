@@ -33,11 +33,15 @@ export default class Structure extends PIXI.Container {
 	}
 
 	upgrade() {
-		this.targetLevel += 1;
+		if(Structure.LEVELING_ENABLED || this.targetLevel < 1) {
+			this.targetLevel += 1;
+		}
 	}
 
 	downgrade() {
-		this.targetLevel -= 1;
+		if(this.targetLevel > 0) {
+			this.targetLevel -= 1;
+		}
 	}
 
 	destructor() {
@@ -56,3 +60,5 @@ export default class Structure extends PIXI.Container {
 	}
 
 }
+
+Structure.LEVELING_ENABLED = false;

@@ -63,7 +63,7 @@ export default class StagePlay extends PIXI.Container {
 		this.waterNetworkSimulator.tick();
 
 
-		let zoom = 1 + (this.time * 0.00004);
+		let zoom = 1 + (this.time * StagePlay.ZOOM_OUT_SPEED);
 		this.world.scale.x = 1 / zoom;
 		this.world.scale.y = 1 / zoom;
 
@@ -92,3 +92,5 @@ export default class StagePlay extends PIXI.Container {
 		this.buildingsBar = undefined;
 	}
 }
+
+StagePlay.ZOOM_OUT_SPEED = 0.0001;
