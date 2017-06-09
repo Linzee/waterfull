@@ -76,7 +76,7 @@ export default class Structure extends PIXI.Container {
 	updateUpgradeClock() {
 		if(!this.isActive()) {
 			this.upgradeClock.visible = true;
-			this.upgradeClock.gotoAndStop(Math.round((this.water / this.getRequiredWater())* this.upgradeClock.totalFrames))
+			this.upgradeClock.gotoAndStop(Math.round((this.water / this.getRequiredWater())* (this.upgradeClock.totalFrames-1)))
 		} else {
 			this.upgradeClock.visible = false;
 		}
