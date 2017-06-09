@@ -2,8 +2,9 @@ import Building from './Building';
 
 export default class Out extends Building {
 
-  constructor() {
-    super(require("../images/out.png"))
+  constructor(stagePlay) {
+    super(require("../images/out.png"));
+    this.stagePlay = stagePlay;
   }
 
 	getCapacity() {
@@ -13,6 +14,7 @@ export default class Out extends Building {
   tick() {
     super.tick();
     if(this.isActive()) {
+      this.stagePlay.waterDelivered += this.water;
       this.water = 0;
     }
   }

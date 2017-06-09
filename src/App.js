@@ -1,8 +1,9 @@
 import Stages from './common/Stages';
+import TopScore from './common/TopScore';
+import WorldGenerator from './common/WorldGenerator';
+
 import StagePlay from './stages/StagePlay';
 import StageTopScore from './stages/StageTopScore';
-
-import TopScore from './common/TopScore';
 
 export default class App {
 
@@ -10,6 +11,7 @@ export default class App {
 		this.settings = settings;
 		this.stages = new Stages();
 		this.topScore = new TopScore();
+		this.worldGenerator = new WorldGenerator();
 	}
 
 	start() {
@@ -17,7 +19,7 @@ export default class App {
 			this.renderer = PIXI.autoDetectRenderer(this.settings.width, this.settings.height, {antialias: true});
 			document.body.appendChild(this.renderer.view);
 
-			this.stages.addStage("play", new StagePlay(this.stages, this.settings, this.renderer.plugins.interaction));
+			this.stages.addStage("play", new StagePlay(this.stages, this.settings, this.renderer.plugins.interaction, this.worldGenerator));
 			this.stages.addStage("topScore", new StageTopScore(this.stages, this.topScore, this.settings));
 			this.stages.changeStage("play");
 

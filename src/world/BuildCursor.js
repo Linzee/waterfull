@@ -8,12 +8,13 @@ import Structure from './Structure';
 
 export default class BuildCursor extends PIXI.Container {
 
-	constructor(world, editBuildingGui, interactionManager) {
+	constructor(world, editBuildingGui, interactionManager, stagePlay) {
 		super();
 
 		this.world = world;
 		this.editBuildingGui = editBuildingGui;
 		this.interactionManager = interactionManager;
+		this.stagePlay = stagePlay;
 
 		this.building = null;
 		this.buildingPipe = false;
@@ -107,7 +108,7 @@ export default class BuildCursor extends PIXI.Container {
 				this.onChange('in');
 				break;
 			case 'out':
-				this.building = new Out();
+				this.building = new Out(this.stagePlay);
 				this.addChild(this.building);
 				this.onChange('out');
 				break;

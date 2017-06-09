@@ -7,14 +7,16 @@ import WorldGenerator from '../common/WorldGenerator';
 
 export default class StagePlay extends PIXI.Container {
 
-	constructor(stages, settings, interactionManager) {
+	constructor(stages, settings, interactionManager, worldGenerator) {
 		super();
 
 		this.stages = stages;
 		this.settings = settings;
 		this.interactionManager = interactionManager;
+		this.worldGenerator = worldGenerator;
 
 		this.time = 0;
+		this.waterDelivered = 0;
 	}
 
 	load() {
@@ -39,24 +41,25 @@ export default class StagePlay extends PIXI.Container {
 
 		this.editBuildingGui = new EditBuildingGui();
 
-		this.buildCursor = new BuildCursor(this.world, this.editBuildingGui, this.interactionManager);
+		this.buildCursor = new BuildCursor(this.world, this.editBuildingGui, this.interactionManager, this);
 
 		this.buildingsBar = new BuildingsBar(this.buildCursor);
 		this.buildingsBar.x = this.settings.width / 2 - (60*5)/2;
 		this.buildingsBar.y = this.settings.height - 60;
 
-		/*
-		this.cartsText = new PIXI.Text("0", new PIXI.TextStyle({fontSize: 40, fill: '#9FBC12'}));
-		this.cartsText.x = 16;
-		this.cartsText.y = 16;
-		*/
+		this.waterDelivered = 0;
+
+		this.waterDeliveredText = new PIXI.Text("0", new PIXI.TextStyle({fontSize: 40, fill: '#000000'}));
+		this.waterDeliveredText.x = 16;
+		this.waterDeliveredText.y = 16;
 
 		this.addChild(this.world);
 		this.addChild(this.buildCursor);
 		this.addChild(this.editBuildingGui);
 		this.addChild(this.buildingsBar);
+		this.addChild(this.waterDeliveredText);
 
-		var worldGenerator = new WorldGenerator(this.world);
+		this.worldGenerator.generateWorld(this.world);
 	}
 
 	tick() {
@@ -71,6 +74,8 @@ export default class StagePlay extends PIXI.Container {
 		this.buildCursor.scale.y = 1 / zoom;
 
 		this.time += 1;
+
+		this.waterDeliveredText.text = ""+this.waterDelivered;
 	}
 
 	restart() {
@@ -81,15 +86,18 @@ export default class StagePlay extends PIXI.Container {
 	unload() {
 		this.removeChild(this.world);
 		this.removeChild(this.buildCursor);
+		this.removeChild(this.editBuildingGui);
 		this.removeChild(this.buildingsBar);
+		this.removeChild(this.waterDeliveredText);
 
 		this.buildingsBar.destructor();
 
-		this.world = undefined;
 		this.waterNetworkSimulator = undefined;
+		this.world = undefined;
 		this.buildCursor = undefined;
 		this.editBuildingGui = undefined;
 		this.buildingsBar = undefined;
+		this.waterDeliveredText = undefined;
 	}
 }
 
