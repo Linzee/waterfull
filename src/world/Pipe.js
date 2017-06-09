@@ -15,6 +15,9 @@ export default class Pipe extends Structure {
 		this.to = to;
 		to.pipes.push(this);
 
+		this.x = (from.x + to.x) / 2;
+		this.y = (from.y + to.y) / 2;
+
 		this.waterSpeed = 0;
 
 		this.graphics = new PIXI.Graphics();
@@ -39,13 +42,13 @@ export default class Pipe extends Structure {
 	redraw() {
 		this.graphics.clear();
 
+		let color = null;
 		if(this.waterSpeed > 0) {
-			let color = 0x010000 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
-			this.graphics.lineStyle(2, color).moveTo(this.from.x, this.from.y).lineTo(this.to.x, this.to.y);
+			color = 0x010000 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
 		} else {
-			let color = 0x000001 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
-			this.graphics.lineStyle(2, color).moveTo(this.from.x, this.from.y).lineTo(this.to.x, this.to.y);
+			 color = 0x000001 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
 		}
+		this.graphics.lineStyle(2, color).moveTo(this.from.x - this.x, this.from.y - this.y).lineTo(this.to.x - this.x, this.to.y - this.y);
 	}
 
 }

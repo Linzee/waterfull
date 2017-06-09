@@ -35,6 +35,11 @@ export default class App {
 		.add(require("./images/out.png"))
 		.add(require('./images/point.png'))
 		.add(require("./images/reservoir.png"))
+		.add(require('./images/time_0.png'))
+		.add(require('./images/time_1.png'))
+		.add(require('./images/time_2.png'))
+		.add(require('./images/time_3.png'))
+		.add(require('./images/time_4.png'))
 		.load(setup);
 	}
 }

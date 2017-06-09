@@ -38,14 +38,14 @@ export default class WaterNetworkSimulator {
               }
             } else {
               let ma = Math.min(otherBuilding.getRequiredWater() - otherBuilding.getWater(), Math.min(building.getWater(), pipe.getCapacity() - Math.abs(pipe.waterSpeed)));
-              otherBuilding.water += ma;
+              otherBuilding.addWater(ma);
               pipe.waterSpeed += pipeDirection * ma;
               building.lowerWater(ma);
             }
 
           } else {
             let ma = Math.min(building.getWater(), pipe.getRequiredWater() - pipe.getWater());
-            pipe.water += ma;
+            pipe.addWater(ma);
             building.lowerWater(ma);
           }
         });

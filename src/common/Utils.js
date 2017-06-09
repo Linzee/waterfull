@@ -11,3 +11,15 @@ export function shuffle(a, amount) {
         a[j] = x;
     }
 }
+
+export function animatedSprite(images) {
+  let textureArray = [];
+
+  for (let i=0; i < images.length; i++)
+  {
+     let texture = PIXI.Texture.fromImage(images[i]);
+     textureArray.push(texture);
+  }
+
+  return new PIXI.extras.AnimatedSprite(textureArray);
+}

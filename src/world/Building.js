@@ -9,7 +9,7 @@ export default class Building extends Structure {
 		let sprite = new PIXI.Sprite.fromImage(image);
 		sprite.anchor.x = 0.5;
 		sprite.anchor.y = 0.5;
-		this.addChild(sprite);
+		this.addChildAt(sprite, 0);
 	}
 
 	destructor() {
