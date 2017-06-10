@@ -3,7 +3,6 @@ import WaterNetworkSimulator from '../common/WaterNetworkSimulator';
 import BuildingsBar from '../world/BuildingsBar';
 import EditBuildingGui from '../world/EditBuildingGui';
 import Board from '../world/Board';
-import WorldGenerator from '../common/WorldGenerator';
 
 export default class StagePlay extends PIXI.Container {
 

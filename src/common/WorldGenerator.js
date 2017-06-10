@@ -1,5 +1,4 @@
 import In from '../world/In';
-import Out from '../world/Out';
 
 export default class WorldGenerator {
 
