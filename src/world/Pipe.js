@@ -52,3 +52,5 @@ export default class Pipe extends Structure {
 	}
 
 }
+
+Pipe.MAX_PIPE_LENGTH = 200;

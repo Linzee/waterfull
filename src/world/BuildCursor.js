@@ -23,15 +23,26 @@ export default class BuildCursor extends PIXI.Container {
 		this.mouse_x = 0;
 		this.mouse_y = 0;
 
+		this.buildingPipeGraphics = new PIXI.Graphics();
+
 		world.interactive = true;
 
 		world.on("mousemove", (e) => {
+			this.mouse_x = e.data.global.x / this.scale.x;
+			this.mouse_y = e.data.global.y / this.scale.y;
 			if(this.building !== null) {
-				if(this.buildingPipe === false) {
-					this.mouse_x = e.data.global.x / this.scale.x;
-					this.mouse_y = e.data.global.y / this.scale.y;
-					this.building.x = this.mouse_x;
-					this.building.y = this.mouse_y;
+				this.building.x = this.mouse_x;
+				this.building.y = this.mouse_y;
+			}
+			if(this.buildingPipe !== false) {
+				this.buildingPipeGraphics.clear();
+				if(this.buildingPipe.from !== undefined) {
+					let color = 0xffffff;
+					console.log(distance(this.buildingPipe.from, {x: this.mouse_x * this.world.scale.x + this.world.x, y: this.mouse_y * this.world.scale.y + this.world.y}));
+					if(distance(this.buildingPipe.from, {x: (this.mouse_x - this.world.x) * this.world.scale.x, y: (this.mouse_y - this.world.y) * this.world.scale.y}) > Pipe.MAX_PIPE_LENGTH) {
+						color = 0xff0000;
+					}
+					this.buildingPipeGraphics.lineStyle(2, color).moveTo(this.buildingPipe.from.x + this.world.x /  this.world.scale.x, this.buildingPipe.from.y + this.world.y / this.world.scale.y).lineTo(this.mouse_x, this.mouse_y);
 				}
 			}
 		});
@@ -59,7 +70,7 @@ export default class BuildCursor extends PIXI.Container {
 						});
 
 						//too far
-						if(distance(this.buildingPipe.from, hit) > BuildCursor.MAX_PIPE_LENGTH) {
+						if(distance(this.buildingPipe.from, hit) > Pipe.MAX_PIPE_LENGTH) {
 							canPlace = false;
 						}
 
@@ -67,11 +78,13 @@ export default class BuildCursor extends PIXI.Container {
 							this.buildingPipe.to = hit;
 							world.pipes.addChild(new Pipe(this.buildingPipe.from, this.buildingPipe.to));
 							this.buildingPipe = false;
+							this.removeChild(this.buildingPipeGraphics);
 							this.onChange(null);
 						} else {
 
 							editBuildingGui.setBuilding(null);
 							this.buildingPipe = false;
+							this.removeChild(this.buildingPipeGraphics);
 							this.onChange(null);
 						}
 					}
@@ -79,6 +92,7 @@ export default class BuildCursor extends PIXI.Container {
 
 					editBuildingGui.setBuilding(null);
 					this.buildingPipe = false;
+					this.removeChild(this.buildingPipeGraphics);
 					this.onChange(null);
 				}
 
@@ -136,6 +150,8 @@ export default class BuildCursor extends PIXI.Container {
 					from: undefined,
 					to: undefined
 				};
+				this.buildingPipeGraphics.clear();
+				this.addChild(this.buildingPipeGraphics);
 				this.onChange('pipe');
 				break;
 			case 'reservoir':
@@ -154,5 +170,3 @@ export default class BuildCursor extends PIXI.Container {
 	}
 
 }
-
-BuildCursor.MAX_PIPE_LENGTH = 100;
