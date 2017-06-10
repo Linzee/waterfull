@@ -1,0 +1,13 @@
+{
+	"short_name": "waterfull",
+	"name": "WaterFull",
+	"icons": [
+	{
+		"src": "favicon.ico",
+		"sizes": "32x32",
+		"type": "image/png"
+	}
+	],
+	"start_url": "./",
+	"display": "standalone"
+}
