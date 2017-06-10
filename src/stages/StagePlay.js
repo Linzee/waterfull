@@ -66,12 +66,14 @@ export default class StagePlay extends PIXI.Container {
 		this.waterNetworkSimulator.tick();
 
 
-		let zoom = 1 + (this.time * StagePlay.ZOOM_OUT_SPEED);
-		this.world.scale.x = 1 / zoom;
-		this.world.scale.y = 1 / zoom;
+		let zoom = StagePlay.MIN_ZOOM_OUT + (this.time / StagePlay.ZOOM_OUT_DURATION) * (StagePlay.MAX_ZOOM_OUT - StagePlay.MIN_ZOOM_OUT);
+		if(zoom <= StagePlay.MAX_ZOOM_OUT) {
+			this.world.scale.x = 1 / zoom;
+			this.world.scale.y = 1 / zoom;
 
-		this.buildCursor.scale.x = 1 / zoom;
-		this.buildCursor.scale.y = 1 / zoom;
+			this.buildCursor.scale.x = 1 / zoom;
+			this.buildCursor.scale.y = 1 / zoom;
+		}
 
 		this.time += 1;
 
@@ -101,4 +103,6 @@ export default class StagePlay extends PIXI.Container {
 	}
 }
 
-StagePlay.ZOOM_OUT_SPEED = 0.0001;
+StagePlay.MIN_ZOOM_OUT = 0.5;
+StagePlay.MAX_ZOOM_OUT = 2.5;
+StagePlay.ZOOM_OUT_DURATION = 10000;
