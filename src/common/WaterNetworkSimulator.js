@@ -59,7 +59,5 @@ export default class WaterNetworkSimulator {
       pipe.tick();
       pipe.redraw();
     });
-
-    shuffle(this.world.buildings);
   }
 }

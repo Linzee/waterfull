@@ -5,7 +5,7 @@ import Reservoir from './Reservoir';
 import Pipe from './Pipe';
 import Building from './Building';
 import Structure from './Structure';
-import {binaryPlaceFor} from '../common/Utils';
+import {distance} from '../common/Utils';
 
 export default class BuildCursor extends PIXI.Container {
 
@@ -50,17 +50,27 @@ export default class BuildCursor extends PIXI.Container {
 					} else {
 
 						//pipe already exists
-						var pipeAlreadyThere = false;
+						var canPlace = true;
 						this.buildingPipe.from.pipes.forEach((p) => {
 							var obs = p.getOther(this.buildingPipe.from);
 							if(obs[0] === hit) {
-								pipeAlreadyThere = true;
+								canPlace = false;
 							}
 						});
 
-						if(!pipeAlreadyThere) {
+						//too far
+						if(distance(this.buildingPipe.from, hit) > BuildCursor.MAX_PIPE_LENGTH) {
+							canPlace = false;
+						}
+
+						if(canPlace) {
 							this.buildingPipe.to = hit;
 							world.pipes.addChild(new Pipe(this.buildingPipe.from, this.buildingPipe.to));
+							this.buildingPipe = false;
+							this.onChange(null);
+						} else {
+
+							editBuildingGui.setBuilding(null);
 							this.buildingPipe = false;
 							this.onChange(null);
 						}
@@ -144,3 +154,5 @@ export default class BuildCursor extends PIXI.Container {
 	}
 
 }
+
+BuildCursor.MAX_PIPE_LENGTH = 100;

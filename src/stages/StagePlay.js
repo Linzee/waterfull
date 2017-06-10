@@ -2,7 +2,7 @@ import BuildCursor from '../world/BuildCursor';
 import WaterNetworkSimulator from '../common/WaterNetworkSimulator';
 import BuildingsBar from '../world/BuildingsBar';
 import EditBuildingGui from '../world/EditBuildingGui';
-import Terrain from '../world/Terrain';
+import Board from '../world/Board';
 import WorldGenerator from '../common/WorldGenerator';
 
 export default class StagePlay extends PIXI.Container {
@@ -25,9 +25,9 @@ export default class StagePlay extends PIXI.Container {
 		this.world.x = this.settings.width / 2;
 		this.world.y = this.settings.height / 2;
 
-		let terrain = new Terrain();
-		this.world.terrain = terrain;
-		this.world.addChild(terrain);
+		let board = new Board();
+		this.world.board = board;
+		this.world.addChild(board);
 
 		let pipes = new PIXI.Container();
 		this.world.pipes = pipes;
