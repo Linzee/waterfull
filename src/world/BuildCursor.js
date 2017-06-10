@@ -38,7 +38,6 @@ export default class BuildCursor extends PIXI.Container {
 				this.buildingPipeGraphics.clear();
 				if(this.buildingPipe.from !== undefined) {
 					let color = 0xffffff;
-					console.log(distance(this.buildingPipe.from, {x: this.mouse_x * this.world.scale.x + this.world.x, y: this.mouse_y * this.world.scale.y + this.world.y}));
 					if(distance(this.buildingPipe.from, {x: (this.mouse_x - this.world.x) * this.world.scale.x, y: (this.mouse_y - this.world.y) * this.world.scale.y}) > Pipe.MAX_PIPE_LENGTH) {
 						color = 0xff0000;
 					}

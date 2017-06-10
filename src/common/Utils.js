@@ -29,3 +29,11 @@ export function distance(s1, s2) {
   var dy = s1.y-s2.y;
   return Math.sqrt(dx*dx+dy*dy);
 }
+
+export function sum(arr) {
+  return arr.reduce(function(a, b) { return a + b; });
+}
+
+export function avg(arr) {
+  return sum(arr) / arr.length;
+}

@@ -1,5 +1,5 @@
 import Structure from './Structure';
-import {animatedSprite} from '../common/Utils';
+import {animatedSprite, avg} from '../common/Utils';
 
 export default class Building extends Structure {
 
@@ -10,6 +10,8 @@ export default class Building extends Structure {
 		if(Array.isArray(image)) {
 			this.sprite = animatedSprite(image);
 			this.waterLevelImages = true;
+			this.waterLevels = Array.apply(null, Array(Building.WATER_IMAGE_SMOOTHING_LEVEL)).map(Number.prototype.valueOf,0);
+			this.waterLevelsPointer = 0;
 		} else {
 			this.sprite = new PIXI.Sprite.fromImage(image);
 			this.waterLevelImages = false;
@@ -40,8 +42,19 @@ export default class Building extends Structure {
 
 	updateImage() {
 		if(this.waterLevelImages && this.isActive()) {
-			this.sprite.gotoAndStop(Math.round((this.water / this.getCapacity()) * (this.sprite.totalFrames-1)));
+
+			this.waterLevels[this.waterLevelsPointer] = this.water;
+			this.waterLevelsPointer += 1;
+			if(this.waterLevelsPointer >= this.waterLevels.length) {
+				this.waterLevelsPointer = 0;
+			}
+
+			let water = avg(this.waterLevels);
+
+			this.sprite.gotoAndStop(Math.round((water / this.getCapacity()) * (this.sprite.totalFrames-1)));
 		}
 	}
 
 }
+
+Building.WATER_IMAGE_SMOOTHING_LEVEL = 23;

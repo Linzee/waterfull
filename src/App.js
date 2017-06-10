@@ -35,6 +35,9 @@ export default class App {
 		PIXI.loader
 		.add(require("./images/in.png"))
 		.add(require("./images/out.png"))
+		.add(require("./images/out_0.png"))
+		.add(require("./images/out_1.png"))
+		.add(require("./images/out_2.png"))
 		.add(require('./images/point.png'))
 		.add(require("./images/reservoir.png"))
 		.add(require("./images/reservoir_0.png"))
