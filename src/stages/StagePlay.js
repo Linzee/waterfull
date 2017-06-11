@@ -102,6 +102,6 @@ export default class StagePlay extends PIXI.Container {
 	}
 }
 
-StagePlay.MIN_ZOOM_OUT = 0.5;
-StagePlay.MAX_ZOOM_OUT = 2.5;
-StagePlay.ZOOM_OUT_DURATION = 10000;
+StagePlay.MIN_ZOOM_OUT = 0.6;
+StagePlay.MAX_ZOOM_OUT = 2.0;
+StagePlay.ZOOM_OUT_DURATION = 25000;

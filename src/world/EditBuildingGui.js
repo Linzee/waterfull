@@ -11,6 +11,7 @@ export default class EditBuildingGui extends PIXI.Container {
     if(Structure.LEVELING_ENABLED) {
 
       this.background = new PIXI.Graphics();
+      this.background.cacheAsBitmap = true;
       this.background.drawRect();
       this.background.beginFill(0xCCCCCC);
   		this.background.drawRect(-80, 10, 160, 100);
@@ -50,6 +51,7 @@ export default class EditBuildingGui extends PIXI.Container {
     } else {
 
       this.background = new PIXI.Graphics();
+      this.background.cacheAsBitmap = true;
       this.background.drawRect();
       this.background.beginFill(0xCCCCCC);
   		this.background.drawRect(-80, 10, 160, 46);

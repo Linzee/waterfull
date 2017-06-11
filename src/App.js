@@ -33,6 +33,7 @@ export default class App {
 		}
 
 		PIXI.loader
+		.add(require("./images/background.png"))
 		.add(require("./images/in.png"))
 		.add(require("./images/out.png"))
 		.add(require("./images/out_0.png"))
@@ -44,7 +45,6 @@ export default class App {
 		.add(require("./images/reservoir_1.png"))
 		.add(require("./images/reservoir_2.png"))
 		.add(require("./images/reservoir_3.png"))
-		.add(require("./images/reservoir_4.png"))
 		.add(require('./images/time_0.png'))
 		.add(require('./images/time_1.png'))
 		.add(require('./images/time_2.png'))

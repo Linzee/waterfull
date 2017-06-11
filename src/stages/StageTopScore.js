@@ -19,6 +19,7 @@ export default class StageTopScore extends PIXI.Container {
 
 	load() {
 		this.background = new PIXI.Graphics();
+		this.background.cacheAsBitmap = true;
 		this.background.beginFill(StageTopScore.BACKGROUND_COLOR);
 		this.background.drawRect(0, 0, this.settings.width, this.settings.height);
 
