@@ -7,7 +7,7 @@ export default class BuildingsBar extends PIXI.Container {
 
     this.buildCursor = buildCursor;
 
-    this.buildings = [['in', require('../images/in.png')], ['out', require('../images/out.png')], ['point', require('../images/point.png')], ['pipe', require('../images/pipe.png')], ['reservoir', require('../images/reservoir.png')]].map((typeData, index) => {
+    this.buildings = [['in', require('../images/gui_in.png')], ['out', require('../images/gui_out.png')], ['point', require('../images/gui_point.png')], ['pipe', require('../images/gui_pipe.png')], ['reservoir', require('../images/gui_reservoir.png')]].map((typeData, index) => {
       var type, image;
       [type, image] = typeData;
 
@@ -15,6 +15,11 @@ export default class BuildingsBar extends PIXI.Container {
       sprite.x = 60 * index;
 			sprite.interactive = true;
 			sprite.click = this.newBuilding.bind(this, index);
+
+			var spriteText = new PIXI.Text(""+(index+1), new PIXI.TextStyle({fontSize: 15, fill: 0x000000}));
+			spriteText.x = 1;
+			spriteText.y = 1;
+			sprite.addChild(spriteText);
 
       return {
         type: type,

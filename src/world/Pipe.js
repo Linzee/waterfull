@@ -42,12 +42,7 @@ export default class Pipe extends Structure {
 	redraw() {
 		this.graphics.clear();
 
-		let color = null;
-		if(this.waterSpeed > 0) {
-			color = 0x010000 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
-		} else {
-			 color = 0x000001 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
-		}
+		let color = 0x010000 * Math.floor(255 * (Math.abs(this.waterSpeed) / this.getCapacity()));
 		this.graphics.lineStyle(2, color).moveTo(this.from.x - this.x, this.from.y - this.y).lineTo(this.to.x - this.x, this.to.y - this.y);
 	}
 
